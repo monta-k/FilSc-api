@@ -2,11 +2,11 @@ require 'open-uri'
 require 'nokogiri'
 
  class FilScrape
-  def self.scrape
+  def self.scrape(userId)
     base_url = 'https://filmarks.com/'
 
      charset = nil
-    html = open(base_url + 'users/monta.k/clips') do |f|
+    html = open(base_url + "users/#{userId}/clips") do |f|
       charset = f.charset
       f.read
     end
@@ -34,7 +34,8 @@ require 'nokogiri'
         movie_length = doc3.xpath("//h3[@class='p-content-detail__other-info-title']")[-1].text.delete("^0-9").to_i
         movie_score = doc3.xpath("//div[@class='c-rating__score']")[0].text
         movie_img = doc3.css('.c-content__jacket > img').first.try(:attribute, "src").try(:value)
-        [movie_title, movie_length, movie_score, movie_img]
+        movie_link = base_url + item[:href]
+        [movie_title, movie_length, movie_score, movie_img, movie_link]
       end
       movie.concat(movie_a)
     end
