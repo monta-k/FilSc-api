@@ -2,8 +2,18 @@ module Api
   module V1
     class UsersController < ApplicationController
       before_action :authenticate
-      def show
-        render json: @current_user
+      def update
+        if @current_user.update(user_params)
+          render json: @current_user
+        else
+          render json: { message: 'some error' }, status: :unprocessable_entity
+        end
+      end
+
+      private
+
+      def user_params
+        params.require(:user).permit(:filmarks_id)
       end
     end
   end
