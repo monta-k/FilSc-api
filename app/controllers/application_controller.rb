@@ -10,7 +10,11 @@ class ApplicationController < ActionController::API
   end
 
   def authenticate
-    return if authenticate_firebase_id_token && (@current_user = User.find_by(uid: decoded_token['uid']))
-    render json: { message: 'some error' }, status: :unprocessable_entity
+    unless decoded_token = authenticate_firebase_id_token
+      render json: { message: 'some error' }, status: :unprocessable_entity
+    end
+    unless @current_user = User.find_by(uid: decoded_token['uid'])
+      render json: { message: 'some error' }, status: :unprocessable_entity
+    end
   end
 end
