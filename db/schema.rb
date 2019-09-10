@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2019_09_04_052637) do
     t.string "name", null: false
     t.string "uid", null: false
     t.string "email", null: false
+    t.string "filmarks_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

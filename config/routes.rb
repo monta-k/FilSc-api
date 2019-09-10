@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       root to: 'homes#index'
       resources :users
       resources :signin, only: [:create]
+      get '/scrape/find_user', to: 'scrape#find_user'
     end
   end
 end
