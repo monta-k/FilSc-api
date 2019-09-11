@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resource :users
       resources :signin, only: [:create]
       get '/scrape/find_user', to: 'scrape#find_user'
+      get '/scrape/clip_movies_page', to: 'scrape#clip_movies_page'
     end
   end
 end

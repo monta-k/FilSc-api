@@ -26,6 +26,19 @@ require 'parallel'
     # page = doc.xpath("//ul[@class='c-pagination__list']//li").count
   end
 
+  def self.clip_movies_page(userId)
+    charset = nil
+    html = open(BASE_URL + "/users/#{userId}/clips") do |f|
+      charset = f.charset
+      f.read
+    end
+
+    doc = Nokogiri::HTML.parse(html, nil, charset)
+
+    pages = doc.xpath("//ul[@class='c-pagination__list']//li").count
+    return { pages: pages }
+  end
+
   def page_scrape(page)
     movie = []
 
