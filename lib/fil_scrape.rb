@@ -39,35 +39,31 @@ require 'parallel'
     return { pages: pages }
   end
 
-  def page_scrape(page)
-    movie = []
-
-    page.times do |i|
-      html2 = open(BASE_URL+ "users/monta.k/clips?page=#{i + 1}") do |f|
-        charset = f.charset
-        f.read
-      end
-      doc2 = Nokogiri::HTML.parse(html2, nil, charset)
-      movie_a = movie_detail_scrape(doc2)
-      movie.concat(movie_a)
-      puts movie.count
+  def self.clip_movies(userId, page)
+    charset = nil
+    html = open(BASE_URL + "/users/#{userId}/clips?page=#{page}") do |f|
+      charset = f.charset
+      f.read
     end
 
-     return { title: title, movie: movie}
+    doc = Nokogiri::HTML.parse(html, nil, charset)
+    movies = movie_detail_scrape(doc)
+    return { movies: movies }
   end
 
-  def movie_detail_scrape
-    Parallel.map(doc2.xpath("//h3[@class='c-movie-item__title']//a")) do |item|
-      html3 = open(BASE_URL + item[:href]) do |f|
+  def self.movie_detail_scrape(doc)
+    Parallel.map(doc.xpath("//h3[@class='c-movie-item__title']//a")) do |item|
+      charset = nil
+      html = open(BASE_URL + "/#{item[:href]}") do |f|
         charset = f.charset
         f.read
       end
-      doc3 = Nokogiri::HTML.parse(html3, nil, charset)
-      movie_title = doc3.xpath("//h2[@class='p-content-detail__title']")[0].text
-      movie_length = doc3.xpath("//h3[@class='p-content-detail__other-info-title']")[-1].text.delete("^0-9").to_i
-      movie_score = doc3.xpath("//div[@class='c-rating__score']")[0].text
-      movie_img = doc3.css('.c-content__jacket > img').first.try(:attribute, "src").try(:value)
-      movie_link = base_url + item[:href]
+      item_doc = Nokogiri::HTML.parse(html, nil, charset)
+      movie_title = item_doc.xpath("//h2[@class='p-content-detail__title']")[0].text
+      movie_length = item_doc.xpath("//h3[@class='p-content-detail__other-info-title']")[-1].text.delete("^0-9").to_i
+      movie_score = item_doc.xpath("//div[@class='c-rating__score']")[0].text
+      movie_img = item_doc.css('.c-content__jacket > img').first.try(:attribute, "src").try(:value)
+      movie_link = BASE_URL + "/#{item[:href]}"
       [movie_title, movie_length, movie_score, movie_img, movie_link]
     end
   end
