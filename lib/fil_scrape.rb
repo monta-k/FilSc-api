@@ -64,7 +64,7 @@ require 'parallel'
       movie_score = item_doc.xpath("//div[@class='c-rating__score']")[0].text
       movie_img = item_doc.css('.c-content__jacket > img').first.try(:attribute, "src").try(:value)
       movie_link = BASE_URL + "/#{item[:href]}"
-      [movie_title, movie_length, movie_score, movie_img, movie_link]
+      { title: movie_title, length: movie_length, score: movie_score, image: movie_img, link: movie_link }
     end
   end
 end 
