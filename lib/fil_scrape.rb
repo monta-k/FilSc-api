@@ -36,6 +36,7 @@ require 'parallel'
     doc = Nokogiri::HTML.parse(html, nil, charset)
 
     pages = doc.xpath("//ul[@class='c-pagination__list']//li").count
+    pages = 1 if pages == 0
     return { pages: pages }
   end
 
