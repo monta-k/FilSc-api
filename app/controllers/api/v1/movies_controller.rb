@@ -3,11 +3,17 @@ module Api
     class MoviesController < ApplicationController
       before_action :authenticate
 
+      def show
+        movies = @current_user.movies.order(length: :asc)
+        render json: movies
+      end
+
       def create
         new_movies = params[:movies]
-        movies = new_movies.map do |movie|
+        new_movies.each do |movie|
           @current_user.movies.create!(title: movie[:title], length: movie[:length], score: movie[:score], image: movie[:image], link: movie[:link])
         end
+        movies = @current_user.movies.order(length: :asc)
         render json: movies
       end
 
