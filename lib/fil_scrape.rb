@@ -60,7 +60,7 @@ require 'parallel'
         f.read
       end
       item_doc = Nokogiri::HTML.parse(html, nil, charset)
-      movie_title = item_doc.xpath("//h2[@class='p-content-detail__title']")[0].text
+      movie_title = item_doc.css('.p-content-detail__title > span').text
       movie_length = item_doc.xpath("//h3[@class='p-content-detail__other-info-title']")[-1].text.delete("^0-9").to_i
       movie_score = item_doc.xpath("//div[@class='c-rating__score']")[0].text
       movie_img = item_doc.css('.c-content__jacket > img').first.try(:attribute, "src").try(:value)
