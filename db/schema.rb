@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_12_064550) do
+ActiveRecord::Schema.define(version: 2019_09_21_104144) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,29 @@ ActiveRecord::Schema.define(version: 2019_09_12_064550) do
     t.index ["user_id"], name: "index_movies_on_user_id"
   end
 
+  create_table "popular_movies", force: :cascade do |t|
+    t.integer "tmdb_movie_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tmdb_movies", force: :cascade do |t|
+    t.string "title"
+    t.string "image"
+    t.string "homepage"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_recommended_movies", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "tmdb_movie_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tmdb_movie_id"], name: "index_user_recommended_movies_on_tmdb_movie_id"
+    t.index ["user_id"], name: "index_user_recommended_movies_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.string "uid", null: false
@@ -37,4 +60,6 @@ ActiveRecord::Schema.define(version: 2019_09_12_064550) do
   end
 
   add_foreign_key "movies", "users"
+  add_foreign_key "user_recommended_movies", "tmdb_movies"
+  add_foreign_key "user_recommended_movies", "users"
 end

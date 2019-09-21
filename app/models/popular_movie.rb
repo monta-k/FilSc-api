@@ -1,0 +1,2 @@
+class PopularMovie < ApplicationRecord
+end
