@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       root to: 'homes#index'
       resource :users
       resource :movies
+      resource :popular_movies
       resources :signin, only: [:create]
       get '/scrape/find_user', to: 'scrape#find_user'
       get '/scrape/clip_movies_page', to: 'scrape#clip_movies_page'
