@@ -49,7 +49,7 @@ require 'parallel'
 
     doc = Nokogiri::HTML.parse(html, nil, charset)
     movies = movie_detail_scrape(doc)
-    return { movies: movies }
+    return movies
   end
 
   def self.movie_detail_scrape(doc)

@@ -4,7 +4,7 @@ module Api
       before_action :authenticate
       def update
         if @current_user.update(user_params)
-          render json: @current_user
+          render 'update', formats: 'json', handlers: 'jbuilder'
         else
           render json: { message: 'some error' }, status: :unprocessable_entity
         end
