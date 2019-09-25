@@ -3,7 +3,8 @@ module Api
     class UsersController < ApplicationController
       before_action :authenticate
       def update
-        if @current_user.update(user_params)
+        @user = current_user
+        if @user.update(user_params)
           render 'update', formats: 'json', handlers: 'jbuilder'
         else
           render json: { message: 'some error' }, status: :unprocessable_entity
