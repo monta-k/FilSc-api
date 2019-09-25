@@ -1,10 +1,10 @@
 class ApplicationController < ActionController::API
   private
-  
+
   def authenticate_firebase_id_token
     token = request.headers['Authorization']
     FirebaseAuth::Auth.verify_id_token(token)
-  rescue => e
+  rescue StandardError => e
     logger.error(e.message)
     false
   end
