@@ -5,7 +5,7 @@ module Api
         data = FilScrape.scrape(params[:userId])
         title = data[:title]
         movie = data[:movie].sort_by { |m| m[1] }
-        render json: {title: title, movie: movie}
+        render json: { title: title, movie: movie }
       end
     end
   end

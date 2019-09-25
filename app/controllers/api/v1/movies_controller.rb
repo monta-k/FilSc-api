@@ -19,11 +19,7 @@ module Api
 
       def destroy
         movies = @current_user.movies
-        unless movies.empty?
-          movies.each do |movie|
-            movie.destroy!
-          end
-        end
+        movies.each(&:destroy!) unless movies.empty?
         head :no_content
       end
     end
