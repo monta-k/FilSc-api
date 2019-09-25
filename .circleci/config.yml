@@ -23,6 +23,9 @@ jobs:
       - run:
           name: rspec
           command: docker-compose run app bundle exec rspec
+      - run:
+          name: docker-compose down
+          command: docker-compose down
 
 workflows:
   version: 2
