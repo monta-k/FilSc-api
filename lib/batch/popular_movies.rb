@@ -2,7 +2,9 @@ require 'json'
 require 'net/https'
 require 'uri'
 
-module Batch::PopularMovies extend self
+module Batch::PopularMovies
+  module_function
+
   def batch
     reset_db
 
@@ -20,13 +22,11 @@ module Batch::PopularMovies extend self
   end
 
   def reset_db
-    PopularMovie.all.each do |movie|
-      movie.destroy
-    end
+    PopularMovie.all.each(&:destroy)
   end
 
   def save(movie)
-    if TmdbMovie.find_by_id(movie['id']).nil?
+    if TmdbMovie.find_by(id: movie['id']).nil?
       TmdbMovie.create(
         id: movie['id'],
         title: movie['title'],

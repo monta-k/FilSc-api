@@ -1,0 +1,112 @@
+AllCops:
+  TargetRubyVersion: 2.3
+  Exclude:
+    - 'public/**/*'
+    - 'tmp/**/*'
+    - 'log/**/*'
+    - 'bin/**/*'
+    - 'db/**/*'
+    - 'vendor/**/*'
+    - 'app/lib/v1_adapter/**/*'
+    - 'app/messages/**/*'
+    - 'lib/v2_migration.rb'
+    - 'lib/protobuf/**/*'
+    - 'lib/sequential/**/*'
+    - 'node_modules/**/*'
+
+Rails:
+  Enabled: true
+
+Naming/FileName:
+  Exclude:
+    - 'Gemfile'
+
+# 日本語でコメントできるようにします
+Style/AsciiComments:
+  Enabled: false
+
+# frozen commentは必須ではありません
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# ドキュメントに関するチェックをしません
+Style/Documentation:
+  Enabled: false
+
+# blockコメントを許可します
+Style/BlockComments:
+  Enabled: false
+
+# クラスの書き方はネストでもコンパクトでも良いです
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+# and/orを使えるようにします
+Style/AndOr:
+  EnforcedStyle: conditionals
+
+# begin/end/whileを使えるようにします
+Lint/Loop:
+  Enabled: false
+
+# ifの条件内などで変数への代入を許可します
+Lint/AssignmentInCondition:
+  Enabled: false
+
+# 引数の最後がHashの時、{}はあってもなくてもいいです。
+BracesAroundHashParameters:
+  Enabled: false
+
+# ガード節利用を必須にしない
+Style/GuardClause:
+  Enabled: false
+
+# !!は利用可能
+Style/DoubleNegation:
+  Enabled: false
+
+# %リテラルは()を使う
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    '%w': ()
+    '%W': ()
+    '%i': ()
+    '%I': ()
+
+# method_missingはsuperを実行しない場合もある
+Style/MethodMissingSuper:
+  Enabled: false
+
+# 行の長さを120文字まで許容します
+Metrics/LineLength:
+  Max: 200
+
+# ABCメトリクスのスコアを20まで許容します(デフォルトは15)
+# 代入少なく、関数呼び出し少なく、制御構文少なくしよう
+# テストやバッチ処理などをおこなうクラスはExcludeについかしましょう
+Metrics/AbcSize:
+  Max: 22
+
+# メソッドの長さは20行までにします
+Metrics/MethodLength:
+  Max: 20
+
+# クラスの長さは200行までにします
+Metrics/ClassLength:
+  Max: 200
+
+Metrics/BlockLength:
+  Max: 50
+  Exclude:
+    - 'spec/**/*'
+    - 'config/routes.rb'
+    - 'config/initializers/*'
+    - 'app/*/concerns/*'
+
+Rails/UnknownEnv:
+  Environments:
+    - production
+    - development
+    - test
+    - internal
+    - staging
