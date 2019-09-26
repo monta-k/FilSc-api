@@ -7,3 +7,5 @@ COPY . /app
 
 RUN apt-get update -qq && apt-get install -y build-essential nodejs libpq-dev postgresql-client
 RUN gem update bundler && bundle install
+
+CMD ["rails", "server", "-b", "0.0.0.0"]
