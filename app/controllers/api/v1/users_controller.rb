@@ -11,10 +11,19 @@ module Api
         end
       end
 
+      def destroy
+        @user = current_user
+        if @user.destroy
+          head :no_content
+        else
+          render json: { message: 'some error' }, status: :unprocessable_entity
+        end
+      end
+
       private
 
       def user_params
-        params.require(:user).permit(:filmarks_id)
+        params.require(:user).permit(:filmarks_id, :name)
       end
     end
   end
