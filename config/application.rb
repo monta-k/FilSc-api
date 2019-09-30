@@ -38,6 +38,7 @@ module App
                        helper_specs: false,
                        controller_specs: false,
                        routing_specs: false
+      config.x.cors_allowed_origins = ENV.fetch('CORS_ALLOWED_ORIGINS', 'http://localhost:8080')
     end
   end
 end
