@@ -22,7 +22,7 @@ class FilScrape
     profile_image = doc.css('.p-profile__avator > img').first.try(:attribute, 'src').try(:value)
     profile_name = doc.xpath("//h2[@class='p-profile__name']/text()").to_s
     profile_id = doc.xpath("//span[@class='p-profile__account']")[0].text
-    { url: url, profile_image: profile_image, profile_name: profile_name, profile_id: profile_id }
+    { url: url, profileImage: profile_image, profileName: profile_name, profileId: profile_id }
     # page = doc.xpath("//ul[@class='c-pagination__list']//li").count
   end
 

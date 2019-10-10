@@ -5,7 +5,7 @@ module Api
 
       def show
         @movies = current_user.movies.order(length: :asc)
-        render 'show', formats: 'json', handlers: 'jbuilder'
+        render json: @movies, Serializer: MovieSerializer
       end
 
       def create
@@ -14,7 +14,7 @@ module Api
           current_user.movies.create!(title: movie[:title], length: movie[:length], score: movie[:score], image: movie[:image], link: movie[:link])
         end
         @movies = current_user.movies.order(length: :asc)
-        render 'create', formats: 'json', handlers: 'jbuilder'
+        render json: @movies, Serializer: MovieSerializer
       end
 
       def destroy

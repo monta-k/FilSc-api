@@ -3,14 +3,14 @@ module Api
     class SigninController < ApplicationController
       def create
         if decoded_token = authenticate_firebase_id_token
-          unless @user = User.find_by(uid: decoded_token['uid'])
+          unless @user = User.find_by(uid: decoded_token[:user_id])
             @user = User.create(
-              name: params[:name] || decoded_token['decode_token'][:payload]['name'],
-              uid: decoded_token['uid'],
-              email: decoded_token['decode_token'][:payload]['email']
+              name: params[:name] || decoded_token[:name],
+              uid: decoded_token[:user_id],
+              email: decoded_token[:email]
             )
           end
-          render 'create', formats: 'json', handlers: 'jbuilder'
+          render json: @user, Serializer: UserSerializer
         else
           render json: { message: 'signin error' }, status: :unprocessable_entity
         end
