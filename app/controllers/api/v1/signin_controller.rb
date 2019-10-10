@@ -10,7 +10,7 @@ module Api
               email: decoded_token[:email]
             )
           end
-          render 'create', formats: 'json', handlers: 'jbuilder'
+          render json: @user, Serializer: UserSerializer
         else
           render json: { message: 'signin error' }, status: :unprocessable_entity
         end

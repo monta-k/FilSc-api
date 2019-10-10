@@ -5,7 +5,7 @@ module Api
       def update
         @user = current_user
         if @user.update(user_params)
-          render 'update', formats: 'json', handlers: 'jbuilder'
+          render json: @user, Serializer: UserSerializer
         else
           render json: { message: 'some error' }, status: :unprocessable_entity
         end
