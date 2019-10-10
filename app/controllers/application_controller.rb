@@ -3,7 +3,9 @@ class ApplicationController < ActionController::API
 
   def authenticate_firebase_id_token
     token = request.headers['Authorization']
-    FirebaseAuth::Auth.verify_id_token(token)
+    decoded_token = FirebaseAuth::Auth.verify_id_token(token).symbolize_keys[:decode_token][:payload].symbolize_keys
+    logger.debug 
+    decoded_token
   rescue StandardError => e
     logger.error(e.message)
     false
@@ -11,10 +13,10 @@ class ApplicationController < ActionController::API
 
   def authenticate
     render json: { message: 'some error' }, status: :unprocessable_entity unless @decoded_token = authenticate_firebase_id_token
-    render json: { message: 'some error' }, status: :unprocessable_entity unless @current_user = User.find_by(uid: @decoded_token['uid'])
+    render json: { message: 'some error' }, status: :unprocessable_entity unless @current_user = User.find_by(uid: @decoded_token[:user_id])
   end
 
   def current_user
-    @current_user ||= User.find_by(uid: @decoded_token['uid'])
+    @current_user ||= User.find_by(uid: @decoded_token[:user_id])
   end
 end
