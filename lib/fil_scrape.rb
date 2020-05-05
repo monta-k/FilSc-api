@@ -53,7 +53,7 @@ class FilScrape
   end
 
   def self.movie_detail_scrape(doc)
-    Parallel.map(doc.xpath("//h3[@class='c-movie-item__title']//a")) do |item|
+    Parallel.map(doc.xpath("//h3[@class='c-content-item__title']//a")) do |item|
       charset = nil
       html = URI(BASE_URL + "/#{item[:href]}").open do |f|
         charset = f.charset
